@@ -536,41 +536,21 @@ Below is a non-normative example of a decoded VC in a JSON format, signed as a J
 
 This profile utilizes Decentralized Identifiers (DIDs) as a cryptographically verifiable identifier of the Verifier/RP and Self-Issued OP and that resolve to cryptographic key material.
 
-ION DIDs can operate in both long-form and short-form. Implementations of this profile MUST be able to consume both long-form and short-form DIDs regardless of whether they are anchored.
+The Verifier/RP should always check DIDs against an identity network to validate their current states. Just because DID has been used, doesn't mean the state hasn't changed on the identity network.
 
-The Verifier/RP should always check DIDs against an ION node to validate their current states. Just because a long form DID has been used, doesn't mean the state hasn't changed on ION.
+#### DID
 
-#### Short-Form DID
+DIDs have the entire DID Document encapsulated into the DID itself. This means that public keys cannot be rotated without modifying a DID
 
-Short Form DIDs are DIDs written on a Bitcoin Blockchain. They are also known as anchored DIDs. These types of DIDs give the organization and user the most flexibility because the underlying components of the DID Document, such as public keys and service endpoints, can change without altering the DID itself.
-
-Below is a non-normative example of a short-form DID:
-
-```md
-did:ion:EiDC8qe_kwtm02IVoVZ8epcGi90XnL1NYI6baJIwHVBgrg
-```
-Below is a non-normative example of a DID Document obtained by resolving a short-form DID using an ION Node:
-::: example  Resolved SFD
-```json
-[[insert: ./spec/assets/resolved_short_form_did.json]]
-```
-:::
-
-#### Long-Form DID
-
-Long-form DIDs are DIDs not written on a Bitcoin Blockchain. They are also known as unanchored DIDs.
-
-Long-form DIDs have the entire DID Document encapsulated into the DID itself. This means that public keys cannot be rotated without modifying a DID
-
-Below is a non-normative example of a long-form DID:
-::: example  LFD
+Below is a non-normative example of a DID:
+::: example  DID
 ```json
 [[insert: ./spec/assets/raw_longform_did.json]]
 ```
 :::
 
-Below is a non-normative example of a DID Document obtained by resolving a long-form DID using an ION Node:
-::: example  Resolved LFD
+Below is a non-normative example of a DID Document obtained by resolving a DID using an indentity network:
+::: example  Resolved DID
 ```json
 [[insert: ./spec/assets/resolved_long_form_did.json]]
 ```
@@ -593,7 +573,7 @@ The issued VC MAY include a `credentialStatus` property
 
 When `credentialStatus` is deinfed it MUST use StatusList2021 , as defined in section 5.1 of [[ref: Status List 2021]].
 
-StatusList2021 MUST be discovered using either DID Relative URLs stored in an ID Hub or HTTPS URL. 
+StatusList2021 MUST be discovered using either DID Relative URLs stored in an ID Hub or HTTPS URL.
 
 An Issuer of a VC MAY have an ID Hub serviceEndpoint in the Issuer's DID Document. ID Hubs are the single endpoint to look up objects associated with a DID, as defined in [Identity-Hub].
 Below is a non-normative example of a DID Document that includes a serviceEndpoint:
@@ -614,10 +594,10 @@ Below is a non-normative example of a DID Document that includes a serviceEndpoi
 ```json
 {
   "credentialStatus": {
-    "id": "Qmdfr32sdf32546...",
+    "id": "https://example.com/status/list/:id",
     "type": "StatusList2021",
     "statusListIndex": "94567",
-    "statusListCredential": 'did:ion:123?service=IdentityHub&relativeRef=?messages=[{ type: "CollectionsQuery", statement: { id: "Qmdfr32sdf32546..." }}]'
+    "statusListCredential": "https://example.com/status/list/:id/credential"
   }
 }
 ```
@@ -726,7 +706,7 @@ These identities have been generated only as examples - they are not endorsed or
 
   ```json
   {
-    "did": "did:ion:EiDXRE6GPp716GZvx404LFygQoWshiIqhOFNFBZqoZtD3g:eyJkZWx0YSI6eyJwYXRjaGVzIjpbeyJhY3Rpb24iOiJyZXBsYWNlIiwiZG9jdW1lbnQiOnsicHVibGljS2V5cyI6W3siaWQiOiJrZXktMSIsInB1YmxpY0tleUp3ayI6eyJjcnYiOiJFZDI1NTE5Iiwia3R5IjoiT0tQIiwieCI6IkFzMXNXd3RsTHdRUTgwMElLdC00aEZTMXRKcV9jeDBkSGFmODJUTTJMWUUiLCJraWQiOiJrZXktMSJ9LCJwdXJwb3NlcyI6WyJhdXRoZW50aWNhdGlvbiJdLCJ0eXBlIjoiSnNvbldlYktleTIwMjAifV19fV0sInVwZGF0ZUNvbW1pdG1lbnQiOiJFaUJRWHBqSk9vQ0dpVFp6NVd3ZkE3Y3BqNzFaeG9ZUTQ0cjI1S1NGSEFtZHFRIn0sInN1ZmZpeERhdGEiOnsiZGVsdGFIYXNoIjoiRWlDcEt6cEdrWlNadnRVMG1ETE1QZUZSNHJ4SzlralJVaWFLenluZ3JZd2xVZyIsInJlY292ZXJ5Q29tbWl0bWVudCI6IkVpQ3NfQjVHdEczemR4Vm9wNTdxWlRjb3AzMVRDRDFuVFVXWmxfVFJ5VXlMNncifX0"
+    "did": "did:web:did-web.godiddy.com:76f8a38b-6018-4700-b48d-e3c45260ac9c"
   }
   ```
   </section>
@@ -757,7 +737,7 @@ These identities have been generated only as examples - they are not endorsed or
 
   ```json
   {
-    "did" : "did:ion:EiA6dZUvHYaYkEXCLWf8h7HGGtOs48K1W_10fmKlvqsRnA:eyJkZWx0YSI6eyJwYXRjaGVzIjpbeyJhY3Rpb24iOiJyZXBsYWNlIiwiZG9jdW1lbnQiOnsicHVibGljS2V5cyI6W3siaWQiOiJrZXktMSIsInB1YmxpY0tleUp3ayI6eyJjcnYiOiJFZDI1NTE5Iiwia3R5IjoiT0tQIiwieCI6IlE3eFRIeDkxZW1mb24yUmMtRmlaaXFjWDhpcDk5Vjhkc0prMXhNMkN0aEkiLCJraWQiOiJrZXktMSJ9LCJwdXJwb3NlcyI6WyJhdXRoZW50aWNhdGlvbiJdLCJ0eXBlIjoiSnNvbldlYktleTIwMjAifV19fV0sInVwZGF0ZUNvbW1pdG1lbnQiOiJFaUIyeUF4ZnBEbnp3VTBiQ1pSSTJlOWtPR1JpdER6aGNXaEZoRzdHSjdzQU5nIn0sInN1ZmZpeERhdGEiOnsiZGVsdGFIYXNoIjoiRWlEVkJmUlA1U2ZnYWtkYTlRYmRmOGI4WTVQODN3NGk0Ry1nQ2dwOS0wdThDZyIsInJlY292ZXJ5Q29tbWl0bWVudCI6IkVpQk9QbUQxNUlpNGxlNTdXSGtQVzdnR3NldnBCZWladVhTNFJvNVVsdDhKU3cifX0"
+    "did" : "did:web:did-web.godiddy.com:9d49dea4-354b-4066-822f-77ea911fccd0"
   }
   ```
   </section>
@@ -788,7 +768,7 @@ These identities have been generated only as examples - they are not endorsed or
 
   ```json
   {
-    "did" : "did:ion:EiCTAPu0DKX6KSQKymBgpOUoi5UHW6NOp5fjnQ36_aGbcw:eyJkZWx0YSI6eyJwYXRjaGVzIjpbeyJhY3Rpb24iOiJyZXBsYWNlIiwiZG9jdW1lbnQiOnsicHVibGljS2V5cyI6W3siaWQiOiJrZXktMSIsInB1YmxpY0tleUp3ayI6eyJjcnYiOiJFZDI1NTE5Iiwia3R5IjoiT0tQIiwieCI6ImJzU3BGSGFiWkZyT0JVTy1VclhpVmNVY2RwYWU4WG90ZFhnVnFvbWFaNVkiLCJraWQiOiJrZXktMSJ9LCJwdXJwb3NlcyI6WyJhdXRoZW50aWNhdGlvbiJdLCJ0eXBlIjoiSnNvbldlYktleTIwMjAifV19fV0sInVwZGF0ZUNvbW1pdG1lbnQiOiJFaUNsbHVsZVYxS3RsU3JnaFVQalVYeWZ6Tzh4YlhLS3EtUllZVEJlc3RScWNnIn0sInN1ZmZpeERhdGEiOnsiZGVsdGFIYXNoIjoiRWlDbVJwdjNvaWt6V3RQdFd6UllrZkkwalFTVENZemtQV0d0Qmtocm1UbENpdyIsInJlY292ZXJ5Q29tbWl0bWVudCI6IkVpQ1h2dk5FZnBfa0pucmJ5QnZ2SEYyQVRPUnlPSVFGbU5iNTk5dVctaVlZd1EifX0"
+    "did" : "did:web:did-web.godiddy.com:d01e037f-8437-4352-8905-6a4f8f994df0"
   }
   ```
   </section>
@@ -826,14 +806,14 @@ The Wallet uses the request_uri to obtain the Request Object. The JWS is signed 
 
   ```json
     {
-      "kid" : "did:ion:EiDXRE6GPp716GZvx404LFygQoWshiIqhOFNFBZqoZtD3g:eyJkZWx0YSI6eyJwYXRjaGVzIjpbeyJhY3Rpb24iOiJyZXBsYWNlIiwiZG9jdW1lbnQiOnsicHVibGljS2V5cyI6W3siaWQiOiJrZXktMSIsInB1YmxpY0tleUp3ayI6eyJjcnYiOiJFZDI1NTE5Iiwia3R5IjoiT0tQIiwieCI6IkFzMXNXd3RsTHdRUTgwMElLdC00aEZTMXRKcV9jeDBkSGFmODJUTTJMWUUiLCJraWQiOiJrZXktMSJ9LCJwdXJwb3NlcyI6WyJhdXRoZW50aWNhdGlvbiJdLCJ0eXBlIjoiSnNvbldlYktleTIwMjAifV19fV0sInVwZGF0ZUNvbW1pdG1lbnQiOiJFaUJRWHBqSk9vQ0dpVFp6NVd3ZkE3Y3BqNzFaeG9ZUTQ0cjI1S1NGSEFtZHFRIn0sInN1ZmZpeERhdGEiOnsiZGVsdGFIYXNoIjoiRWlDcEt6cEdrWlNadnRVMG1ETE1QZUZSNHJ4SzlralJVaWFLenluZ3JZd2xVZyIsInJlY292ZXJ5Q29tbWl0bWVudCI6IkVpQ3NfQjVHdEczemR4Vm9wNTdxWlRjb3AzMVRDRDFuVFVXWmxfVFJ5VXlMNncifX0#key-1",
+      "kid" : "did:web:did-web.godiddy.com:76f8a38b-6018-4700-b48d-e3c45260ac9c#key-1",
       "typ" : "JWT",
       "alg" : "EdDSA"
     }.
     {
       "response_type" : "id_token",
       "nonce" : "bcceb347-1374-49b8-ace0-b868162c122d",
-      "client_id" : "did:ion:EiDXRE6GPp716GZvx404LFygQoWshiIqhOFNFBZqoZtD3g:eyJkZWx0YSI6eyJwYXRjaGVzIjpbeyJhY3Rpb24iOiJyZXBsYWNlIiwiZG9jdW1lbnQiOnsicHVibGljS2V5cyI6W3siaWQiOiJrZXktMSIsInB1YmxpY0tleUp3ayI6eyJjcnYiOiJFZDI1NTE5Iiwia3R5IjoiT0tQIiwieCI6IkFzMXNXd3RsTHdRUTgwMElLdC00aEZTMXRKcV9jeDBkSGFmODJUTTJMWUUiLCJraWQiOiJrZXktMSJ9LCJwdXJwb3NlcyI6WyJhdXRoZW50aWNhdGlvbiJdLCJ0eXBlIjoiSnNvbldlYktleTIwMjAifV19fV0sInVwZGF0ZUNvbW1pdG1lbnQiOiJFaUJRWHBqSk9vQ0dpVFp6NVd3ZkE3Y3BqNzFaeG9ZUTQ0cjI1S1NGSEFtZHFRIn0sInN1ZmZpeERhdGEiOnsiZGVsdGFIYXNoIjoiRWlDcEt6cEdrWlNadnRVMG1ETE1QZUZSNHJ4SzlralJVaWFLenluZ3JZd2xVZyIsInJlY292ZXJ5Q29tbWl0bWVudCI6IkVpQ3NfQjVHdEczemR4Vm9wNTdxWlRjb3AzMVRDRDFuVFVXWmxfVFJ5VXlMNncifX0",
+      "client_id" : "did:web:did-web.godiddy.com:76f8a38b-6018-4700-b48d-e3c45260ac9c",
       "response_mode" : "post",
       "nbf" : 1666200678,
       "scope" : "openid",
@@ -864,7 +844,7 @@ The Wallet uses the request_uri to obtain the Request Object. The JWS is signed 
             "alg" : [ "EdDSA", "ES256K" ]
           }
         },
-        "subject_syntax_types_supported" : [ "did:ion" ]
+        "subject_syntax_types_supported" : [ "did:web" ]
       },
       "state" : "8006b5fb-6e3b-42d1-a2be-55ed2a08073d",
       "redirect_uri" : "https://example.com/siop-response",
@@ -902,12 +882,12 @@ The Wallet sends the Authorization Response back to the Verifier. The JWS is sig
 
   ```json
   {
-    "kid" : "did:ion:EiA6dZUvHYaYkEXCLWf8h7HGGtOs48K1W_10fmKlvqsRnA:eyJkZWx0YSI6eyJwYXRjaGVzIjpbeyJhY3Rpb24iOiJyZXBsYWNlIiwiZG9jdW1lbnQiOnsicHVibGljS2V5cyI6W3siaWQiOiJrZXktMSIsInB1YmxpY0tleUp3ayI6eyJjcnYiOiJFZDI1NTE5Iiwia3R5IjoiT0tQIiwieCI6IlE3eFRIeDkxZW1mb24yUmMtRmlaaXFjWDhpcDk5Vjhkc0prMXhNMkN0aEkiLCJraWQiOiJrZXktMSJ9LCJwdXJwb3NlcyI6WyJhdXRoZW50aWNhdGlvbiJdLCJ0eXBlIjoiSnNvbldlYktleTIwMjAifV19fV0sInVwZGF0ZUNvbW1pdG1lbnQiOiJFaUIyeUF4ZnBEbnp3VTBiQ1pSSTJlOWtPR1JpdER6aGNXaEZoRzdHSjdzQU5nIn0sInN1ZmZpeERhdGEiOnsiZGVsdGFIYXNoIjoiRWlEVkJmUlA1U2ZnYWtkYTlRYmRmOGI4WTVQODN3NGk0Ry1nQ2dwOS0wdThDZyIsInJlY292ZXJ5Q29tbWl0bWVudCI6IkVpQk9QbUQxNUlpNGxlNTdXSGtQVzdnR3NldnBCZWladVhTNFJvNVVsdDhKU3cifX0#key-1",
+    "kid" : "did:web:did-web.godiddy.com:9d49dea4-354b-4066-822f-77ea911fccd0#key-1",
     "alg" : "EdDSA"
   }.
   {
-    "sub" : "did:ion:EiA6dZUvHYaYkEXCLWf8h7HGGtOs48K1W_10fmKlvqsRnA:eyJkZWx0YSI6eyJwYXRjaGVzIjpbeyJhY3Rpb24iOiJyZXBsYWNlIiwiZG9jdW1lbnQiOnsicHVibGljS2V5cyI6W3siaWQiOiJrZXktMSIsInB1YmxpY0tleUp3ayI6eyJjcnYiOiJFZDI1NTE5Iiwia3R5IjoiT0tQIiwieCI6IlE3eFRIeDkxZW1mb24yUmMtRmlaaXFjWDhpcDk5Vjhkc0prMXhNMkN0aEkiLCJraWQiOiJrZXktMSJ9LCJwdXJwb3NlcyI6WyJhdXRoZW50aWNhdGlvbiJdLCJ0eXBlIjoiSnNvbldlYktleTIwMjAifV19fV0sInVwZGF0ZUNvbW1pdG1lbnQiOiJFaUIyeUF4ZnBEbnp3VTBiQ1pSSTJlOWtPR1JpdER6aGNXaEZoRzdHSjdzQU5nIn0sInN1ZmZpeERhdGEiOnsiZGVsdGFIYXNoIjoiRWlEVkJmUlA1U2ZnYWtkYTlRYmRmOGI4WTVQODN3NGk0Ry1nQ2dwOS0wdThDZyIsInJlY292ZXJ5Q29tbWl0bWVudCI6IkVpQk9QbUQxNUlpNGxlNTdXSGtQVzdnR3NldnBCZWladVhTNFJvNVVsdDhKU3cifX0",
-    "aud" : "did:ion:EiDXRE6GPp716GZvx404LFygQoWshiIqhOFNFBZqoZtD3g:eyJkZWx0YSI6eyJwYXRjaGVzIjpbeyJhY3Rpb24iOiJyZXBsYWNlIiwiZG9jdW1lbnQiOnsicHVibGljS2V5cyI6W3siaWQiOiJrZXktMSIsInB1YmxpY0tleUp3ayI6eyJjcnYiOiJFZDI1NTE5Iiwia3R5IjoiT0tQIiwieCI6IkFzMXNXd3RsTHdRUTgwMElLdC00aEZTMXRKcV9jeDBkSGFmODJUTTJMWUUiLCJraWQiOiJrZXktMSJ9LCJwdXJwb3NlcyI6WyJhdXRoZW50aWNhdGlvbiJdLCJ0eXBlIjoiSnNvbldlYktleTIwMjAifV19fV0sInVwZGF0ZUNvbW1pdG1lbnQiOiJFaUJRWHBqSk9vQ0dpVFp6NVd3ZkE3Y3BqNzFaeG9ZUTQ0cjI1S1NGSEFtZHFRIn0sInN1ZmZpeERhdGEiOnsiZGVsdGFIYXNoIjoiRWlDcEt6cEdrWlNadnRVMG1ETE1QZUZSNHJ4SzlralJVaWFLenluZ3JZd2xVZyIsInJlY292ZXJ5Q29tbWl0bWVudCI6IkVpQ3NfQjVHdEczemR4Vm9wNTdxWlRjb3AzMVRDRDFuVFVXWmxfVFJ5VXlMNncifX0",
+    "sub" : "did:web:did-web.godiddy.com:9d49dea4-354b-4066-822f-77ea911fccd0",
+    "aud" : "did:web:did-web.godiddy.com:76f8a38b-6018-4700-b48d-e3c45260ac9c",
     "iss" : "https://self-issued.me/v2/openid-vc",
     "exp" : 1666215078,
     "iat" : 1666200678,
@@ -937,12 +917,12 @@ The Wallet sends the Authorization Response back to the Verifier. The JWS is sig
 
   ```json
   {
-    "kid" : "did:ion:EiA6dZUvHYaYkEXCLWf8h7HGGtOs48K1W_10fmKlvqsRnA:eyJkZWx0YSI6eyJwYXRjaGVzIjpbeyJhY3Rpb24iOiJyZXBsYWNlIiwiZG9jdW1lbnQiOnsicHVibGljS2V5cyI6W3siaWQiOiJrZXktMSIsInB1YmxpY0tleUp3ayI6eyJjcnYiOiJFZDI1NTE5Iiwia3R5IjoiT0tQIiwieCI6IlE3eFRIeDkxZW1mb24yUmMtRmlaaXFjWDhpcDk5Vjhkc0prMXhNMkN0aEkiLCJraWQiOiJrZXktMSJ9LCJwdXJwb3NlcyI6WyJhdXRoZW50aWNhdGlvbiJdLCJ0eXBlIjoiSnNvbldlYktleTIwMjAifV19fV0sInVwZGF0ZUNvbW1pdG1lbnQiOiJFaUIyeUF4ZnBEbnp3VTBiQ1pSSTJlOWtPR1JpdER6aGNXaEZoRzdHSjdzQU5nIn0sInN1ZmZpeERhdGEiOnsiZGVsdGFIYXNoIjoiRWlEVkJmUlA1U2ZnYWtkYTlRYmRmOGI4WTVQODN3NGk0Ry1nQ2dwOS0wdThDZyIsInJlY292ZXJ5Q29tbWl0bWVudCI6IkVpQk9QbUQxNUlpNGxlNTdXSGtQVzdnR3NldnBCZWladVhTNFJvNVVsdDhKU3cifX0#key-1",
+    "kid" : "did:web:did-web.godiddy.com:9d49dea4-354b-4066-822f-77ea911fccd0#key-1",
     "alg" : "EdDSA"
   }.
   {
-    "aud" : "did:ion:EiDXRE6GPp716GZvx404LFygQoWshiIqhOFNFBZqoZtD3g:eyJkZWx0YSI6eyJwYXRjaGVzIjpbeyJhY3Rpb24iOiJyZXBsYWNlIiwiZG9jdW1lbnQiOnsicHVibGljS2V5cyI6W3siaWQiOiJrZXktMSIsInB1YmxpY0tleUp3ayI6eyJjcnYiOiJFZDI1NTE5Iiwia3R5IjoiT0tQIiwieCI6IkFzMXNXd3RsTHdRUTgwMElLdC00aEZTMXRKcV9jeDBkSGFmODJUTTJMWUUiLCJraWQiOiJrZXktMSJ9LCJwdXJwb3NlcyI6WyJhdXRoZW50aWNhdGlvbiJdLCJ0eXBlIjoiSnNvbldlYktleTIwMjAifV19fV0sInVwZGF0ZUNvbW1pdG1lbnQiOiJFaUJRWHBqSk9vQ0dpVFp6NVd3ZkE3Y3BqNzFaeG9ZUTQ0cjI1S1NGSEFtZHFRIn0sInN1ZmZpeERhdGEiOnsiZGVsdGFIYXNoIjoiRWlDcEt6cEdrWlNadnRVMG1ETE1QZUZSNHJ4SzlralJVaWFLenluZ3JZd2xVZyIsInJlY292ZXJ5Q29tbWl0bWVudCI6IkVpQ3NfQjVHdEczemR4Vm9wNTdxWlRjb3AzMVRDRDFuVFVXWmxfVFJ5VXlMNncifX0",
-    "iss" : "did:ion:EiA6dZUvHYaYkEXCLWf8h7HGGtOs48K1W_10fmKlvqsRnA:eyJkZWx0YSI6eyJwYXRjaGVzIjpbeyJhY3Rpb24iOiJyZXBsYWNlIiwiZG9jdW1lbnQiOnsicHVibGljS2V5cyI6W3siaWQiOiJrZXktMSIsInB1YmxpY0tleUp3ayI6eyJjcnYiOiJFZDI1NTE5Iiwia3R5IjoiT0tQIiwieCI6IlE3eFRIeDkxZW1mb24yUmMtRmlaaXFjWDhpcDk5Vjhkc0prMXhNMkN0aEkiLCJraWQiOiJrZXktMSJ9LCJwdXJwb3NlcyI6WyJhdXRoZW50aWNhdGlvbiJdLCJ0eXBlIjoiSnNvbldlYktleTIwMjAifV19fV0sInVwZGF0ZUNvbW1pdG1lbnQiOiJFaUIyeUF4ZnBEbnp3VTBiQ1pSSTJlOWtPR1JpdER6aGNXaEZoRzdHSjdzQU5nIn0sInN1ZmZpeERhdGEiOnsiZGVsdGFIYXNoIjoiRWlEVkJmUlA1U2ZnYWtkYTlRYmRmOGI4WTVQODN3NGk0Ry1nQ2dwOS0wdThDZyIsInJlY292ZXJ5Q29tbWl0bWVudCI6IkVpQk9QbUQxNUlpNGxlNTdXSGtQVzdnR3NldnBCZWladVhTNFJvNVVsdDhKU3cifX0",
+    "aud" : "did:web:did-web.godiddy.com:76f8a38b-6018-4700-b48d-e3c45260ac9c",
+    "iss" : "did:web:did-web.godiddy.com:9d49dea4-354b-4066-822f-77ea911fccd0",
     "vp" : {
       "type" : [ "VerifiablePresentation" ],
       "@context" : [ "https://www.w3.org/2018/credentials/v1" ],
@@ -978,14 +958,14 @@ Note: The example VC does not contain a resolvable status list.
 
   ```json
   {
-    "kid" : "did:ion:EiCTAPu0DKX6KSQKymBgpOUoi5UHW6NOp5fjnQ36_aGbcw:eyJkZWx0YSI6eyJwYXRjaGVzIjpbeyJhY3Rpb24iOiJyZXBsYWNlIiwiZG9jdW1lbnQiOnsicHVibGljS2V5cyI6W3siaWQiOiJrZXktMSIsInB1YmxpY0tleUp3ayI6eyJjcnYiOiJFZDI1NTE5Iiwia3R5IjoiT0tQIiwieCI6ImJzU3BGSGFiWkZyT0JVTy1VclhpVmNVY2RwYWU4WG90ZFhnVnFvbWFaNVkiLCJraWQiOiJrZXktMSJ9LCJwdXJwb3NlcyI6WyJhdXRoZW50aWNhdGlvbiJdLCJ0eXBlIjoiSnNvbldlYktleTIwMjAifV19fV0sInVwZGF0ZUNvbW1pdG1lbnQiOiJFaUNsbHVsZVYxS3RsU3JnaFVQalVYeWZ6Tzh4YlhLS3EtUllZVEJlc3RScWNnIn0sInN1ZmZpeERhdGEiOnsiZGVsdGFIYXNoIjoiRWlDbVJwdjNvaWt6V3RQdFd6UllrZkkwalFTVENZemtQV0d0Qmtocm1UbENpdyIsInJlY292ZXJ5Q29tbWl0bWVudCI6IkVpQ1h2dk5FZnBfa0pucmJ5QnZ2SEYyQVRPUnlPSVFGbU5iNTk5dVctaVlZd1EifX0#key-1",
+    "kid" : "did:web:did-web.godiddy.com:d01e037f-8437-4352-8905-6a4f8f994df0#key-1",
     "typ" : "JWT",
     "alg" : "EdDSA"
   }.
   {
-    "sub" : "did:ion:EiA6dZUvHYaYkEXCLWf8h7HGGtOs48K1W_10fmKlvqsRnA:eyJkZWx0YSI6eyJwYXRjaGVzIjpbeyJhY3Rpb24iOiJyZXBsYWNlIiwiZG9jdW1lbnQiOnsicHVibGljS2V5cyI6W3siaWQiOiJrZXktMSIsInB1YmxpY0tleUp3ayI6eyJjcnYiOiJFZDI1NTE5Iiwia3R5IjoiT0tQIiwieCI6IlE3eFRIeDkxZW1mb24yUmMtRmlaaXFjWDhpcDk5Vjhkc0prMXhNMkN0aEkiLCJraWQiOiJrZXktMSJ9LCJwdXJwb3NlcyI6WyJhdXRoZW50aWNhdGlvbiJdLCJ0eXBlIjoiSnNvbldlYktleTIwMjAifV19fV0sInVwZGF0ZUNvbW1pdG1lbnQiOiJFaUIyeUF4ZnBEbnp3VTBiQ1pSSTJlOWtPR1JpdER6aGNXaEZoRzdHSjdzQU5nIn0sInN1ZmZpeERhdGEiOnsiZGVsdGFIYXNoIjoiRWlEVkJmUlA1U2ZnYWtkYTlRYmRmOGI4WTVQODN3NGk0Ry1nQ2dwOS0wdThDZyIsInJlY292ZXJ5Q29tbWl0bWVudCI6IkVpQk9QbUQxNUlpNGxlNTdXSGtQVzdnR3NldnBCZWladVhTNFJvNVVsdDhKU3cifX0",
+    "sub" : "did:web:did-web.godiddy.com:9d49dea4-354b-4066-822f-77ea911fccd0",
     "nbf" : 1666200677,
-    "iss" : "did:ion:EiCTAPu0DKX6KSQKymBgpOUoi5UHW6NOp5fjnQ36_aGbcw:eyJkZWx0YSI6eyJwYXRjaGVzIjpbeyJhY3Rpb24iOiJyZXBsYWNlIiwiZG9jdW1lbnQiOnsicHVibGljS2V5cyI6W3siaWQiOiJrZXktMSIsInB1YmxpY0tleUp3ayI6eyJjcnYiOiJFZDI1NTE5Iiwia3R5IjoiT0tQIiwieCI6ImJzU3BGSGFiWkZyT0JVTy1VclhpVmNVY2RwYWU4WG90ZFhnVnFvbWFaNVkiLCJraWQiOiJrZXktMSJ9LCJwdXJwb3NlcyI6WyJhdXRoZW50aWNhdGlvbiJdLCJ0eXBlIjoiSnNvbldlYktleTIwMjAifV19fV0sInVwZGF0ZUNvbW1pdG1lbnQiOiJFaUNsbHVsZVYxS3RsU3JnaFVQalVYeWZ6Tzh4YlhLS3EtUllZVEJlc3RScWNnIn0sInN1ZmZpeERhdGEiOnsiZGVsdGFIYXNoIjoiRWlDbVJwdjNvaWt6V3RQdFd6UllrZkkwalFTVENZemtQV0d0Qmtocm1UbENpdyIsInJlY292ZXJ5Q29tbWl0bWVudCI6IkVpQ1h2dk5FZnBfa0pucmJ5QnZ2SEYyQVRPUnlPSVFGbU5iNTk5dVctaVlZd1EifX0",
+    "iss" : "did:web:did-web.godiddy.com:d01e037f-8437-4352-8905-6a4f8f994df0",
     "iat" : 1666200677,
     "vc" : {
       "credentialSubject" : {
@@ -1001,9 +981,9 @@ Note: The example VC does not contain a resolvable status list.
       "credentialStatus" : {
         "statusPurpose" : "revocation",
         "statusListIndex" : "0",
-        "id" : "https://example.com/api/astatuslist/did:ion:EiCTAPu0DKX6KSQKymBgpOUoi5UHW6NOp5fjnQ36_aGbcw/1#0",
+        "id" : "https://example.com/api/astatuslist/1#0",
         "type" : "StatusList2021Entry",
-        "statusListCredential" : "https://example.com/api/astatuslist/did:ion:EiCTAPu0DKX6KSQKymBgpOUoi5UHW6NOp5fjnQ36_aGbcw/1"
+        "statusListCredential" : "https://example.com/api/astatuslist/1"
       }
     },
     "jti" : "c4f17e31-b454-4755-9189-6165ec5706a2"
