@@ -1,0 +1,11 @@
+curl \
+  -H 'Content-Type: application/json' \
+  -X POST \
+  -d '{ \
+    "request_jwt": "eyJhbGciOiJFUzI..." \
+  }' \
+  https://vc-dev.meeco.me/oidc/presentations/requests/verify
+
+Returns 200 in case of valid request
+Returns 400 in case of some error
+

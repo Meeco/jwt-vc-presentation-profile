@@ -1,0 +1,31 @@
+curl \
+  -H 'Content-Type: application/json' \
+  -X POST \
+  -d '{ \
+    "request" { \
+      "presentation_definition_id": "9ffb72aa-be20-4092-ab7d-0f04d5f4a93b", \
+      "expires_at": "2022-11-27T10:22:15.877Z", \
+      "redirect_uri": "https://beta.did.msidentity.com/v1.0/d394b20e-da32-4e3a-be69-53ef83b6abf9/verifiablecredentials/present", \
+    } \
+  }' \
+  https://vc-dev.meeco.me/oidc/presentations/requests
+
+
+
+Response:
+{
+  "request": {
+    "id": "d394b20e-da32-4e3a-be69-53ef83b6abf9",
+    "client_id": "did:web:did-web.godiddy.com:685729a8-16ec-44a2-87d6-ac600f165445",
+    "client_name": "Interop WG",
+    "nonce": "O1mZGnuet++Ilg2c1jR4jA==",
+    "redirect_uri": "https://beta.did.msidentity.com/v1.0/d394b20e-da32-4e3a-be69-53ef83b6abf9/verifiablecredentials/present",
+    "presentation_definition_id": "9ffb72aa-be20-4092-ab7d-0f04d5f4a93b",
+    "scope": "openid",
+    "response_type": "id_token",
+    "response_mode": "post",
+    "expires_at": 1646337778,
+    "unsigned_request_jwt": "eyJhbGciOiJFUzI...",
+    "signed_request_jwt": null
+  }
+}

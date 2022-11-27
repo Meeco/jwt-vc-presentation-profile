@@ -993,6 +993,57 @@ Note: The example VC does not contain a resolvable status list.
   </section>
 </tab-panels>
 
+## VC API Requests
+
+### Create presentation request
+::: example Create presentation request
+```json
+[[insert: ./spec/assets/oidc_presentations_create_request_call.txt]]
+```
+:::
+
+### Update presentation request with signed request JWT
+::: example Update presentation request
+```json
+[[insert: ./spec/assets/oidc_presentations_update_request_call.txt]]
+```
+:::
+
+### List presentation requests
+::: example List presentation requests
+```json
+[[insert: ./spec/assets/oidc_presentations_requests_call.txt]]
+```
+:::
+
+### Get request JWT
+::: example Get request JWT
+```json
+[[insert: ./spec/assets/oidc_presentations_request_jwt.txt]]
+```
+:::
+
+### Verify JWT request
+::: example Verify JWT request
+```json
+[[insert: ./spec/assets/oidc_presentations_verify_request_call.txt]]
+```
+:::
+
+### Generate verifiable presentation
+::: example Generate verifiable peresentation
+```json
+[[insert: ./spec/assets/presentations_generate_call.txt]]
+```
+:::
+
+### Generate OIDC response tokens
+::: example Generate OIDC response tokens
+```json
+[[insert: ./spec/assets/oidc_presentations_generate_tokens_call.txt]]
+```
+:::
+
 ## References
 
 ### Normative References

@@ -1,0 +1,7 @@
+curl \
+  -H 'Content-Type: application/jwt' \
+  -X GET \
+  https://vc-dev.meeco.me/oidc/presentations/requests/{id}/jwt
+
+Response:
+eyJhbGciOiJFUzI...
