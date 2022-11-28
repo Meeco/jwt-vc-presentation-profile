@@ -2,10 +2,12 @@ curl \
   -H 'Content-Type: application/json' \
   -X POST \
   -d '{ \
-    "request" { \
+    "request": { \
+      "client_id": "did:web:...", \
+      "client_name": "Client name example", \
       "presentation_definition_id": "9ffb72aa-be20-4092-ab7d-0f04d5f4a93b", \
       "expires_at": "2022-11-27T10:22:15.877Z", \
-      "redirect_uri": "https://beta.did.msidentity.com/v1.0/d394b20e-da32-4e3a-be69-53ef83b6abf9/verifiablecredentials/present", \
+      "redirect_base_uri": "https://beta.did.msidentity.com", \
     } \
   }' \
   https://vc-dev.meeco.me/oidc/presentations/requests

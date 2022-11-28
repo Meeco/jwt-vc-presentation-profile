@@ -2,7 +2,7 @@ curl \
   -H 'Content-Type: application/json' \
   -X PUT \
   -d '{ \
-    "request" { \
+    "request": { \
       "signed_request_jwt": "eyJhbGciOiJFUzI...", \
     } \
   }' \

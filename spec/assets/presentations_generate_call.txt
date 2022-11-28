@@ -1,0 +1,15 @@
+curl \
+  -H 'Content-Type: application/json' \
+  -X POST \
+  -d '{ \
+    "credentials": [ \
+      "eyJhbGciOiJFUzI...",
+      ...
+    ] \
+  }' \
+  https://vc-dev.meeco.me/presentations/generate
+
+Response:
+{
+  unsigned_presentation_jwt: "eyJhbGciOiJFUzI..."
+}
